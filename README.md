@@ -1,118 +1,82 @@
-# **USER AUTHENTICATION SYSTEM**
+E-COMMERCE CART SYSTEM
 
-A simple full-stack user registration system with React frontend and Node.js backend using MongoDB.
+A simple full-stack e-commerce cart system with React frontend and Node.js backend using MongoDB.
 
----
+Features
 
-## **FEATURES**
+Add products to cart
 
-- User registration with name, email, and password  
-- Password hashing with bcrypt  
-- REST API with Express  
-- MongoDB database with Mongoose  
-- Responsive React signup form  
+Update product quantities
 
----
+Remove products from cart
 
-## **TECH STACK**
+User authentication with registration and login
 
-- **Frontend**: React, CSS  
-- **Backend**: Node.js, Express, MongoDB, Mongoose  
-- **Authentication**: bcrypt, JWT  
+Password hashing with bcrypt
 
----
+REST API with Express
 
-## **SETUP**
+MongoDB database with Mongoose
 
-### **BACKEND**
+Responsive React frontend
 
-**Install dependencies:**
-```bash
+Tech Stack
+
+Frontend: React, CSS
+
+Backend: Node.js, Express, MongoDB, Mongoose
+
+Authentication: bcrypt, JWT
+
+Setup Backend
+
+Navigate to the backend folder:
+
 cd backend
-npm install
-Create .env file with:
 
-ini
-Copy code
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_secret_key
-Run the server:
-
-bash
-Copy code
-npm start
-FRONTEND
 Install dependencies:
 
-bash
-Copy code
-cd frontend
 npm install
-Run the React app:
 
-bash
-Copy code
+Create a .env file with:
+
+PORT=5000 MONGO_URI=your_mongodb_connection_string JWT_SECRET=your_secret_key
+
+Run the server:
+
+npm run start
+
+Frontend
+
+Navigate to the frontend folder:
+
+cd frontend
+
+Install dependencies:
+
+npm install
+
+Run the app:
+
 npm start
-USAGE
-Visit the registration page at http://localhost:3000
 
-Fill out and submit the form
+Usage
 
-The form sends a POST request to http://localhost:5000/api/register
+Access the app at http://localhost:3000
 
-EXAMPLE REGISTER COMPONENT
-jsx
-Copy code
-import React, { useState } from "react";
+Register or login to manage your cart
 
-function Register() {
-  const [form, setForm] = useState({ name: "", email: "", password: "" });
+Add, update, or remove products; data is handled through the backend API at http://localhost:5000/api
 
-  const handleChange = (e) =>
-    setForm({ ...form, [e.target.name]: e.target.value });
+Example Register Component import React, { useState } from "react";
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const res = await fetch("http://localhost:5000/api/register", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(form),
-    });
+function Register() { const [form, setForm] = useState({ name: "", email: "", password: "" });
 
-    if (res.ok) {
-      alert("Registration successful!");
-    } else {
-      alert("Registration failed");
-    }
-  };
+const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
-  return (
-    <form onSubmit={handleSubmit}>
-      <input
-        name="name"
-        placeholder="Name"
-        value={form.name}
-        onChange={handleChange}
-      />
-      <input
-        name="email"
-        placeholder="Email"
-        value={form.email}
-        onChange={handleChange}
-      />
-      <input
-        name="password"
-        type="password"
-        placeholder="Password"
-        value={form.password}
-        onChange={handleChange}
-      />
-      <button type="submit">Register</button>
-    </form>
-  );
-}
+const handleSubmit = async (e) => { e.preventDefault(); const res = await fetch("http://localhost:5000/api/register", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(form), }); if (res.ok) alert("Registration successful!"); else alert("Registration failed"); };
 
+return (
+
+Register ); }
 export default Register;
-LICENSE
-This project is licensed under the MIT License.
