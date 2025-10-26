@@ -1,0 +1,135 @@
+import React, { useState } from "react";
+import "./EcommerceApp.css";
+
+function EcommerceApp() {
+  const [view, setView] = useState("signup"); // signup, login, cart
+
+  // Signup state
+  const [signupForm, setSignupForm] = useState({ name: "", email: "", password: "" });
+
+  // Login state
+  const [loginForm, setLoginForm] = useState({ email: "", password: "" });
+
+  // Cart state
+  const [cart, setCart] = useState([]);
+  const [product, setProduct] = useState("");
+
+  // Handlers
+  const handleSignupChange = (e) => {
+    setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
+  };
+
+  const handleLoginChange = (e) => {
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+  };
+
+  const handleSignupSubmit = (e) => {
+    e.preventDefault();
+    alert("Signup successful: " + JSON.stringify(signupForm));
+    setView("login");
+  };
+
+  const handleLoginSubmit = (e) => {
+    e.preventDefault();
+    alert("Login successful: " + JSON.stringify(loginForm));
+    setView("cart");
+  };
+
+  const addToCart = () => {
+    if (product.trim() !== "") {
+      setCart([...cart, product]);
+      setProduct("");
+    }
+  };
+
+  const removeItem = (index) => {
+    setCart(cart.filter((_, i) => i !== index));
+  };
+
+  return (
+    <div className="app-bg">
+      {view === "signup" && (
+        <form className="app-form" onSubmit={handleSignupSubmit}>
+          <h2>Signup</h2>
+          <input
+            type="text"
+            name="name"
+            placeholder="Enter Name"
+            value={signupForm.name}
+            onChange={handleSignupChange}
+            required
+          />
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={signupForm.email}
+            onChange={handleSignupChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={signupForm.password}
+            onChange={handleSignupChange}
+            required
+          />
+          <button type="submit">Signup</button>
+          <div className="switch-link">
+            Already have an account? <span onClick={() => setView("login")}>Login</span>
+          </div>
+        </form>
+      )}
+
+      {view === "login" && (
+        <form className="app-form" onSubmit={handleLoginSubmit}>
+          <h2>Login</h2>
+          <input
+            type="email"
+            name="email"
+            placeholder="Enter Email"
+            value={loginForm.email}
+            onChange={handleLoginChange}
+            required
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Enter Password"
+            value={loginForm.password}
+            onChange={handleLoginChange}
+            required
+          />
+          <button type="submit">Login</button>
+          <div className="switch-link">
+            Don't have an account? <span onClick={() => setView("signup")}>Signup</span>
+          </div>
+        </form>
+      )}
+
+      {view === "cart" && (
+        <div className="app-form">
+          <h2>Shopping Cart</h2>
+          <input
+            type="text"
+            placeholder="Enter product"
+            value={product}
+            onChange={(e) => setProduct(e.target.value)}
+          />
+          <button onClick={addToCart}>Add to Cart</button>
+          <ul>
+            {cart.map((item, index) => (
+              <li key={index}>
+                {item} <button onClick={() => removeItem(index)}>Remove</button>
+              </li>
+            ))}
+          </ul>
+          <div className="switch-link">
+            Logout? <span onClick={() => setView("login")}>Login</span>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
